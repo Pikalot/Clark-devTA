@@ -13,19 +13,30 @@ const logger = require('../../util/logger');
 const { officeAccessCard = {} } = require('../../config/config.json');
 const { API_KEY = 'NOTHING_REALLY' } = officeAccessCard;
 
-
 router.use(bodyParser.json());
 
 function checkIfCardExists(cardBytes) {
   return new Promise((resolve) => {
     try {
-      OfficeAccessCard.findOne({ cardBytes }, (error, result) => {
-        if (error) {
-          logger.error('checkIfCardExists got an error querying mongodb: ', error);
-          return resolve(false);
+      OfficeAccessCard.findOneAndUpdate(
+        { cardBytes:cardBytes},
+        {
+          $inc: { verifiedCount: 1 },
+          $set: { lastVerified: Date.now() }
+        }, {
+          useFindAndModify: false, new:true, upsert:false
         }
-        return resolve(!!result);
-      });
+        , (error, result) => {
+          if (error) {
+            logger.error('checkIfCardExists got an error querying mongodb: ', error);
+            return resolve(false);
+          }
+          if(!result){
+            logger.info(`Card:${cardBytes} not found in the database`);
+            return resolve(false);
+          }
+          return resolve(!!result);
+        });
     } catch (error) {
       logger.error('checkIfCardExists caught an error: ', error);
       return resolve(false);
@@ -33,10 +44,9 @@ function checkIfCardExists(cardBytes) {
   });
 }
 
-router.get('/verify', async (req, res) => {
+router.get('/verify', async (req, res) =>{
   const { cardBytes, add = false } = req.query;
   const apiKey = req.headers['x-api-key'];
-
   const required = [
     { value: apiKey, title: 'X-API-Key HTTP header', },
     { value: cardBytes, title: 'cardBytes query parameter', },
@@ -45,8 +55,7 @@ router.get('/verify', async (req, res) => {
   const missingValue = required.find(({ value }) => !value);
 
   if (missingValue) {
-    res.status(BAD_REQUEST).send(`${missingValue.title} missing from request`);
-    return;
+    return res.status(BAD_REQUEST).send(` ${missingValue.title} missing from request`);
   }
 
   if (apiKey !== API_KEY) {
@@ -54,11 +63,9 @@ router.get('/verify', async (req, res) => {
   }
 
   const cardExists = await checkIfCardExists(cardBytes);
-
   if (cardExists) {
     return res.sendStatus(OK);
   }
-
   // if a card doesnt exist and we arent trying
   // to add a new one, that means we were trying
   // to verify a card, and that card isnt found.

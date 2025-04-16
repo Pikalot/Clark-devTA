@@ -12,6 +12,14 @@ const OfficeAccessCardSchema = new Schema(
       type: Date,
       default: Date.now
     },
+    verifiedCount:{
+      type:Number,
+      default:0
+    },
+    lastVerified:{
+      type:Date,
+      default: Date.now
+    }
   },
   { collection: 'OfficeAccessCards' }
 );
