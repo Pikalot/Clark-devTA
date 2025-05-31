@@ -9,7 +9,6 @@ const Home = () => {
 
   const [message, setMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
-
   async function getMessage() {
     try {
       const messageData = await getAd();
@@ -25,6 +24,38 @@ const Home = () => {
     getMessage();
   }, []);
 
+  function isValidUrl(str) {
+    try {
+      new URL(str);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function renderMessageWithLinks(message) {
+    if (!message) {
+      return null;
+    }
+    return message.split(/(https?:\/\/[^\s]+)/g).map((part, index) => {
+      if (isValidUrl(part)) {
+        return (
+          <a
+            key={index}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 underline"
+          >
+            {part}
+          </a>
+        );
+      }
+
+      return <span key={index}>{part}</span>;
+    });
+  }
+
   return (
     <div className='flex flex-col min-h-[calc(100vh-86px)] z-[-200] bg-gradient-to-r from-gray-800 to-gray-600'>
       <div className = "flex flex-col items-center justify-center my-4">
@@ -35,7 +66,7 @@ const Home = () => {
           className="text-white"
           style={{ display: showMessage ? 'block' : 'none' }} // Conditional display based on state
         >
-          {message}
+          {renderMessageWithLinks(message)}
         </motion.p>
       </div>
       <div className="flex flex-col flex-wrap items-center justify-center flex-1 h-full my-4 md:flex-row xl:my-0">
