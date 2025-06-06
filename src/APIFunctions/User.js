@@ -65,6 +65,7 @@ export async function getAllUsers({
  * @param {(string|undefined)} userToEdit.discordUsername
  * @param {(string|undefined)} userToEdit.discordDiscrim
  * @param {(string|undefined)} userToEdit.discordID
+ * @param {(string|undefined)} userToEdit.backgroundColor
  * @param {(string|undefined)} userToEdit.numberOfSemestersToSignUpFor
  * @param {(string|undefined)} userToEdit.doorCode - The updated password of
  * the user
@@ -95,6 +96,7 @@ export async function editUser(userToEdit, token) {
     discordUsername,
     discordDiscrim,
     discordID,
+    backgroundColor,
     pagesPrinted,
     accessLevel,
     lastLogin,
@@ -115,6 +117,7 @@ export async function editUser(userToEdit, token) {
       discordUsername,
       discordDiscrim,
       discordID,
+      backgroundColor,
       pagesPrinted,
       accessLevel,
       lastLogin,
