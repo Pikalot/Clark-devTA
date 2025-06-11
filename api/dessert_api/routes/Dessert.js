@@ -14,7 +14,7 @@ function checkAuth(req, res, next) {
     next();
 }
 
-router.post('/createDessert', checkAuth, (req, res) => {
+router.post('/createDessert', (req, res) => {
     const { rating } = req.body;
     const numberSent = !Number.isNaN(Number(rating));
 
