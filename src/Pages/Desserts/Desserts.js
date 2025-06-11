@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from 'react';
+import { getAllDesserts } from '../../APIFunctions/Desserts';
+import style from './Desserts.module.css';
+
+export default function DessertPage() {
+    const [desserts, setDesserts] = useState([]);
+    async function getDessertsFromDB() {
+        const response = await getAllDesserts();
+        if (!response.error) {
+            setDesserts(response.responseData);
+        }
+    }
+
+    useEffect(() => {
+        getDessertsFromDB();
+    }, []);
+
+    return (
+        <div className={style["container"]}>
+            <header>
+                <h1>Desserts</h1>
+            </header>
+            
+            {desserts && desserts.length > 0 ? (desserts.map((dessert) => (
+                <div className={style["index-card"]} key={dessert._id}>
+                    <h2>{dessert.title}</h2>
+                    <p>{dessert.description}</p>
+                    <p>{dessert.rating}</p>
+                </div>
+                ))
+            ) : (
+                <p>No desserts yet!</p>
+            )}
+        </div>
+    )
+}
+
+//     return (
+//         <div>
+//             <h1>Welcome to Dessert Page!</h1>
+//             <table>
+//                 <thead>
+//                     <tr>
+//                         <th>Title</th>
+//                         <th>Description</th>
+//                         <th>Rating</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {desserts.map((dessert) => {
+//                         return (
+//                             <tr key={dessert._id}>
+//                                 <td>{dessert.title}</td>
+//                                 <td>{dessert.description}</td>
+//                                 <td>{dessert.rating}</td>
+//                             </tr>
+//                         );
+//                     })}
+//                 </tbody>
+//             </table>
+//         </div>
+//     )
+// }
