@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getAllDesserts } from '../../APIFunctions/Desserts';
+import { getAllDesserts, createDessert } from '../../APIFunctions/Desserts';
 import style from './Desserts.module.css';
 
-export default function DessertAdminPage() {
+export default function DessertAdminPage(props) {
     const [desserts, setDesserts] = useState([]);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [rating, setRating] = useState("");
+
     async function getDessertsFromDB() {
         const response = await getAllDesserts();
         if (!response.error) {
@@ -21,12 +25,44 @@ export default function DessertAdminPage() {
                 <h1>Dessert Admin Page</h1>
             </header>
             <body>
-                <form>
-                    <input type="text" id="title" placeholder="Title" />
-                    <input type="text" id="description" placeholder="Desc." />
-                    <input type="number" id="rating" placeholder='Rating' />
-                    <button onClick={alert("submitted")}>Submit</button>
-                </form>
+                <div>
+                    {/* <form onSubmit={(e) => createDessert({
+                    title,
+                    description,
+                    rating,
+                }, props.user.token)}> */}
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={title}
+                        placeholder="Title"
+                        onChange={e => setTitle(e.target.value)} />
+                    <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        value={description}
+                        placeholder="Desc."
+                        onChange={e => setDescription(e.target.value)} />
+                    <input
+                        type="text"
+                        id="rating"
+                        name="rating"
+                        value={rating}
+                        placeholder='Rating'
+                        onChange={e => setRating(e.target.value)} />
+                    <button
+                        type="submit"
+                        onClick={() => createDessert({
+                            title,
+                            description,
+                            rating,
+                        }, props.user.token)}>
+                        Submit
+                    </button>
+                    {/* </form> */}
+                </div>
                 <main>
                     {desserts && desserts.length > 0 ? (desserts.map((dessert) => (
                         <div className={style['index-container']} key={dessert._id}>
@@ -48,6 +84,6 @@ export default function DessertAdminPage() {
                     )}
                 </main>
             </body>
-        </div>
+        </div >
     );
 }

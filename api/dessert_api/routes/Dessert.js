@@ -25,20 +25,20 @@ router.post('/createDessert', (req, res) => {
     });
 
     Dessert.create(newEvent)
-    .then((post) => {
-        return res.json(post);
-    })
-    .catch(
-        (error) => res.sendStatus(BAD_REQUEST)
-    );
+        .then((post) => {
+            return res.json(post);
+        })
+        .catch(
+            (error) => res.sendStatus(BAD_REQUEST)
+        );
 });
 
 router.get('/getDesserts', (req, res) => {
     Dessert.find()
-    .then(items => res.status(OK).send(items))
-    .catch(error => {
-        res.sendStatus(BAD_REQUEST);
-    });
+        .then(items => res.status(OK).send(items))
+        .catch(error => {
+            res.sendStatus(BAD_REQUEST);
+        });
 })
 
 router.post('/editDessert', checkAuth, (req, res) => {
@@ -50,37 +50,37 @@ router.post('/editDessert', checkAuth, (req, res) => {
     } = req.body;
 
     Dessert.findOne({ _id })
-    .then(Dessert => {
-        Dessert.title = title || Dessert.title;
-        Dessert.description = description || Dessert.description;
-        Dessert.rating = rating || Dessert.rating;
-        Dessert
-        .save()
-        .then(() => {
-            res.sendStatus(OK);
+        .then(Dessert => {
+            Dessert.title = title || Dessert.title;
+            Dessert.description = description || Dessert.description;
+            Dessert.rating = rating || Dessert.rating;
+            Dessert
+                .save()
+                .then(() => {
+                    res.sendStatus(OK);
+                })
+                .catch(() => {
+                    res.sendStatus(BAD_REQUEST);
+                });
         })
         .catch(() => {
-            res.sendStatus(BAD_REQUEST);
+            res.sendStatus(NOT_FOUND);
         });
-    })
-    .catch(() => {
-        res.sendStatus(NOT_FOUND);
-    });
 });
 
 router.post('/deleteDessert', checkAuth, (req, res) => {
     Dessert.deleteOne({ _id: req.body._id })
-    .then(result => {
-        if (result.n < 1) {
-            res.sendStatus(NOT_FOUND);
-        }
-        else {
-            res.sendStatus(OK);
-        }
-    })
-    .catch(() => {
-        res.sendStatus(BAD_REQUEST);
-    });
+        .then(result => {
+            if (result.n < 1) {
+                res.sendStatus(NOT_FOUND);
+            }
+            else {
+                res.sendStatus(OK);
+            }
+        })
+        .catch(() => {
+            res.sendStatus(BAD_REQUEST);
+        });
 });
 
 module.exports = router;

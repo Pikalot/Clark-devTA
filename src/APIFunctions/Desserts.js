@@ -16,3 +16,23 @@ export async function getAllDesserts() {
 
     return status;
 }
+
+export async function createDessert(data, token) {
+    let status = new ApiResponse();
+    try {
+        await axios.post(DESSERT_API_URL + `/Dessert/createDessert`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        status.responseData = response.data;
+    }
+    catch (error) {
+        status.error = true;
+        status.responseData = error;
+    }
+    return status;
+}
