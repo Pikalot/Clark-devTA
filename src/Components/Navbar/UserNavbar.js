@@ -9,11 +9,12 @@ export default function UserNavBar(props) {
   const unauthedRoutes = [
     { title: 'About', route: '/about' },
     { title: 'Projects', route: '/projects' },
+    { title: 'Desserts', route: '/desserts' },
   ];
 
 
   const authedRoutes = [{ title: 'Printing', route: '/2DPrinting' },
-    {title: 'Chat', route: '/messaging'},
+  { title: 'Chat', route: '/messaging' },
   ];
 
   const authentication = [
@@ -34,11 +35,18 @@ export default function UserNavBar(props) {
           );
         })}
         {props.user.accessLevel >= membershipState.OFFICER && (
-          <li>
-            <a href='/user-manager'>
-              Admin
-            </a>
-          </li>
+          <>
+            <li>
+              <a href='/user-manager'>
+                Admin
+              </a>
+            </li>
+            <li>
+              <a href='/dessert-admin'>
+                Desserts
+              </a>
+            </li>
+          </>
         )}
       </>
     );

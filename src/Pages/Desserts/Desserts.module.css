@@ -23,3 +23,84 @@
     font-size: large;
     color: lightgoldenrodyellow;
 }
+
+.custom-text {
+    color: white;
+    font-size: large;
+}
+
+header {
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+}
+
+form input {
+    border: 1px solid black;
+    margin: 1rem;
+}
+
+form button {
+    background: lightgray;
+    margin: 1rem;
+    width: 100px;
+}
+
+form button:hover {
+    background: darkgray;
+    color: white;
+    font-weight: bold;
+}
+
+.index-container {
+    border: 1px solid black;
+    color: rgb(10, 10, 49);
+    margin: 5px;
+}
+
+.index-container h2 {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.index-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.index-admin>div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.delete-button {
+    background: darkred;
+    color: white;
+    width: 75px;
+}
+
+.edit-button {
+    background: darkcyan;
+    color: white;
+    width: 75px;
+}
+
+.button {
+    transition: all 0.2s ease;
+    /* smooth animation */
+}
+
+.delete-button:hover,
+.edit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

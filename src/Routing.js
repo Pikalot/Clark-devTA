@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './Components/Routing/PrivateRoute';
@@ -32,6 +32,7 @@ import sendUnsubscribeEmail from './Pages/Profile/admin/SendUnsubscribeEmail';
 import Messaging from './Pages/Messaging/Messaging.js';
 
 import DessertPage from './Pages/Desserts/Desserts.js';
+import DessertAdminPage from './Pages/Desserts/DessertsAdmin.js';
 
 export default function Routing({ appProps }) {
   const userIsAuthenticated = appProps.authenticated;
@@ -140,16 +141,24 @@ export default function Routing({ appProps }) {
       allowedIf: userIsOfficerOrAdmin,
       redirect: '/',
       inAdminNavbar: true
-    }
+    },
+    {
+      Component: DessertAdminPage,
+      path: '/dessert-admin',
+      allowedIf: userIsOfficerOrAdmin,
+      redirect: '/',
+      inAdminNavbar: true
+    },
   ];
   const signedOutRoutes = [
     { Component: Home, path: '/' },
     { Component: VerifyEmailPage, path: '/verify' },
     { Component: ResetPasswordPage, path: '/reset' },
-    { Component: AboutPage, path: '/about'},
-    { Component: ProjectsPage, path: '/projects'},
+    { Component: AboutPage, path: '/about' },
+    { Component: ProjectsPage, path: '/projects' },
     { Component: EmailPreferencesPage, path: '/emailPreferences' },
-    { Component: DessertPage, path: '/desserts'},
+    { Component: DessertPage, path: '/desserts' },
+    // { Component: DessertAdminPage, path: '/dessert-admin' },
   ];
   return (
     <div>
@@ -182,7 +191,7 @@ export default function Routing({ appProps }) {
                   allowed: allowedIf,
                   user: appProps.user,
                   redirect,
-                  authenticated:userIsAuthenticated,
+                  authenticated: userIsAuthenticated,
                   ...appProps
                 }}
                 component={props => getCorrectComponent(props)}

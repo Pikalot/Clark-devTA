@@ -1,9 +1,6 @@
 const { SceHttpServer } = require('../util/SceHttpServer');
 
 function main() {
-
-        console.log('show server')
-
     const API_ENDPOINTS = [
         __dirname + '/routes/Dessert.js',
     ];

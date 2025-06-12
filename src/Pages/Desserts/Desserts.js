@@ -16,48 +16,21 @@ export default function DessertPage() {
     }, []);
 
     return (
-        <div className={style["container"]}>
+        <div className={style['container']}>
             <header>
                 <h1>Desserts</h1>
             </header>
-            
+
             {desserts && desserts.length > 0 ? (desserts.map((dessert) => (
-                <div className={style["index-card"]} key={dessert._id}>
+                <div className={style['index-card']} key={dessert._id}>
                     <h2>{dessert.title}</h2>
                     <p>{dessert.description}</p>
                     <p>{dessert.rating}</p>
                 </div>
-                ))
+            ))
             ) : (
-                <p>No desserts yet!</p>
+                <p className={style['custom-text']}>No desserts yet!</p>
             )}
         </div>
-    )
+    );
 }
-
-//     return (
-//         <div>
-//             <h1>Welcome to Dessert Page!</h1>
-//             <table>
-//                 <thead>
-//                     <tr>
-//                         <th>Title</th>
-//                         <th>Description</th>
-//                         <th>Rating</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {desserts.map((dessert) => {
-//                         return (
-//                             <tr key={dessert._id}>
-//                                 <td>{dessert.title}</td>
-//                                 <td>{dessert.description}</td>
-//                                 <td>{dessert.rating}</td>
-//                             </tr>
-//                         );
-//                     })}
-//                 </tbody>
-//             </table>
-//         </div>
-//     )
-// }
