@@ -20,7 +20,7 @@ export async function getAllDesserts() {
 export async function createDessert(data, token) {
     let status = new ApiResponse();
     try {
-        await axios.post(DESSERT_API_URL + `/Dessert/createDessert`,
+        const response = await axios.post(DESSERT_API_URL + `/Dessert/createDessert`,
             data,
             {
                 headers: {
@@ -35,4 +35,40 @@ export async function createDessert(data, token) {
         status.responseData = error;
     }
     return status;
+}
+
+export async function deleteDessert(data, token) {
+    let status = new ApiResponse();
+    try {
+        const response = await axios.post(DESSERT_API_URL + `/Dessert/deleteDessert`, data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                data: data,
+            }
+        );
+        status.responseData = response.data;
+    }
+    catch (err) {
+        status.error = true;
+        status.responseData = err;
+    }
+}
+
+export async function editDessert(data, token) {
+    let status = new ApiResponse();
+    try {
+        const response = await axios.post(DESSERT_API_URL + `/Dessert/editDessert`, data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            data: data,
+        });
+        status.responseData = response.data;
+    }
+    catch (error) {
+        status.error = true;
+        status.responseData = error;
+    }
 }

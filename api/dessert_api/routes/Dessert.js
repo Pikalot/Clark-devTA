@@ -41,7 +41,7 @@ router.get('/getDesserts', (req, res) => {
         });
 })
 
-router.post('/editDessert', checkAuth, (req, res) => {
+router.post('/editDessert', (req, res) => {
     const {
         title,
         description,
@@ -68,7 +68,7 @@ router.post('/editDessert', checkAuth, (req, res) => {
         });
 });
 
-router.post('/deleteDessert', checkAuth, (req, res) => {
+router.post('/deleteDessert', (req, res) => {
     Dessert.deleteOne({ _id: req.body._id })
         .then(result => {
             if (result.n < 1) {

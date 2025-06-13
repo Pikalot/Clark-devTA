@@ -47,8 +47,8 @@ form input {
     margin: 1rem;
 }
 
-form button {
-    background: lightgray;
+.form-button {
+    background-color: lightgray;
     margin: 1rem;
     width: 100px;
 }
@@ -70,7 +70,8 @@ form button:hover {
     font-size: xx-large;
 }
 
-.index-admin {
+.index-admin,
+.edit-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -94,13 +95,31 @@ form button:hover {
     width: 75px;
 }
 
-.button {
+.save-button {
+    background: lightgray;
+    color: black;
+    width: 75px;
+}
+
+button {
     transition: all 0.2s ease;
     /* smooth animation */
 }
 
 .delete-button:hover,
-.edit-button:hover {
+.edit-button:hover,
+.save-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.edit-form {
+    background: gray;
+}
+
+.edit-form input {
+    display: block;
+    border: 1px solid black;
+    width: 800px;
+    margin-bottom: 0.5px;
 }
